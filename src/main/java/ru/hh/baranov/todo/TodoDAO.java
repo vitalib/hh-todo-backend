@@ -1,11 +1,10 @@
-package ru.hh.nab.example;
+package ru.hh.baranov.todo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TodoDAO {
     private static int counter = 0;
-
     private List<Todo> todos = new ArrayList<>();
 
     public List<Todo> findAll() {
@@ -27,7 +26,6 @@ public class TodoDAO {
     }
 
     public void clearAll() {
-
         todos = new ArrayList<>();
         counter = 0;
     }

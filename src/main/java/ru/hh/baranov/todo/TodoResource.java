@@ -1,4 +1,4 @@
-package ru.hh.nab.example;
+package ru.hh.baranov.todo;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -23,7 +23,6 @@ public class TodoResource {
     @Path("/todos")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTodos() {
-        //TODO Sort list in desc order for getAllTodos
         return Response.ok()
                 .entity(todoDAO.findAll())
                 .build();

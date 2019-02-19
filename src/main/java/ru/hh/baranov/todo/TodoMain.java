@@ -1,4 +1,4 @@
-package ru.hh.nab.example;
+package ru.hh.baranov.todo;
 
 import ru.hh.nab.starter.NabApplication;
 

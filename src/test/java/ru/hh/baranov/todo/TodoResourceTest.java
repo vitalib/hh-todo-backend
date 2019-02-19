@@ -1,4 +1,4 @@
-package ru.hh.nab.example;
+package ru.hh.baranov.todo;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +14,8 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-@ContextConfiguration(classes = ExampleTestConfig.class)
-public class ExampleResourceTest extends NabTestBase {
+@ContextConfiguration(classes = TodoTestConfig.class)
+public class TodoResourceTest extends NabTestBase {
 
   @Inject
   TodoDAO todoDAO;
@@ -44,14 +44,13 @@ public class ExampleResourceTest extends NabTestBase {
 
   @Test
   public void resourceGetSingleTodo() {
-    todoDAO.save(new Todo("kuku"));
-    Response response = createRequest("/api/todos/0").get();
+    Todo newTodo = todoDAO.save(new Todo("kuku"));
+    Response response = createRequest("/api/todos/" + newTodo.getId()).get();
     assertThat(response.readEntity(String.class), containsString("kuku"));
   }
 
   @Test
   public void resourceModifySingle() {
-
     Todo todo = new Todo("kuku");
     todoDAO.save(todo);
     todo.setTitle("modified");
@@ -65,7 +64,7 @@ public class ExampleResourceTest extends NabTestBase {
   @Test
   public void deleteTodo() {
     Todo todo = new Todo("kuku");
-    Response response =  target("/api/todos/0")
+    Response response =  target("/api/todos/" + todo.getId())
             .request()
             .delete();
     assertEquals(todoDAO.findAll().toString(), "[]");

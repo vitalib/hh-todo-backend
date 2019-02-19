@@ -1,26 +1,14 @@
-package ru.hh.nab.example;
+package ru.hh.baranov.todo;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.Objects;
-//import javax.validation.constraints.NotBlank;
-//import javax.validation.constraints.Size;
-//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-//import org.glassfish.jersey.message.filtering.EntityFiltering;
-//import org.springframework.data.annotation.Id;
-//import org.springframework.data.mongodb.core.index.Indexed;
-//import org.springframework.data.mongodb.core.mapping.Document;
 
-//@EntityFiltering
-//@JsonIgnoreProperties(value = {"createdAt"}, allowGetters = true)
 @XmlRootElement
 public class Todo {
-//    @Id
+
     private String id;
 
-//    @NotBlank
-//    @Size(max=100)
-//    @Indexed(unique=true)
     private String title;
 
     private Boolean completed = false;
