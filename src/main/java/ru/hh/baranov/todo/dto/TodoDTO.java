@@ -1,13 +1,29 @@
 package ru.hh.baranov.todo.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.beans.BeanUtils;
+import ru.hh.baranov.todo.entities.Todo;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+@JsonIgnoreProperties(value = {"createdAt"})
+@XmlRootElement
 public class TodoDTO {
 
     private String title;
     private String id;
     private Boolean completed;
 
-    public TodoDTO(String title) {
+    public TodoDTO(Todo todo) {
+        BeanUtils.copyProperties(todo, this);
+    }
 
+    public TodoDTO() {
+
+    }
+
+    public TodoDTO(String title) {
+        this.title = title;
     }
 
     public TodoDTO(String title, String id, Boolean completed) {

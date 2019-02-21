@@ -3,6 +3,8 @@ package ru.hh.baranov.todo;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
+import ru.hh.baranov.todo.dao.TodoDAOInMemory;
+import ru.hh.baranov.todo.dto.TodoDTO;
 import ru.hh.baranov.todo.entities.Todo;
 import ru.hh.baranov.todo.exceptions.TodoNotFoundException;
 import ru.hh.baranov.todo.services.TodoService;
@@ -22,7 +24,7 @@ import static org.junit.Assert.assertThat;
 public class TodoResourceTest extends NabTestBase {
 
   @Inject
-  TodoDAO todoDAO;
+  TodoDAOInMemory todoDAOInMemory;
 
   @Inject
   TodoService todoService;
@@ -30,7 +32,7 @@ public class TodoResourceTest extends NabTestBase {
 
   @Before
   public void setUp() {
-    todoDAO.clearAll();
+    todoDAOInMemory.clearAll();
   }
 
   @Test
@@ -51,19 +53,20 @@ public class TodoResourceTest extends NabTestBase {
 
   @Test
   public void resourceGetSingleTodo() {
-    Todo newTodo = todoDAO.save(new Todo("kuku"));
+    Todo newTodo = todoDAOInMemory.save(new TodoDTO("kuku"));
     Response response = createRequest("/api/todos/" + newTodo.getId()).get();
     assertThat(response.readEntity(String.class), containsString("kuku"));
   }
 
   @Test
   public void resourceModifySingle() {
-    Todo todo = new Todo("kuku");
-    todoDAO.save(todo);
-    todo.setTitle("modified");
-    Response response =  target("/api/todos/" + todo.getId())
+    TodoDTO todoDTO = new TodoDTO("kuku");
+    TodoDTO saved = todoService.save(todoDTO);
+    saved.setTitle("modified");
+    TodoDTO modified = todoService.update(saved.getId(), saved);
+    Response response =  target("/api/todos/" + saved.getId())
             .request()
-            .buildPut(Entity.json(todo))
+            .buildPut(Entity.json(modified))
             .invoke();
     assertThat(response.readEntity(String.class), containsString("modified"));
   }
@@ -74,14 +77,14 @@ public class TodoResourceTest extends NabTestBase {
     Response response =  target("/api/todos/" + todo.getId())
             .request()
             .delete();
-    assertEquals(todoDAO.findAll().toString(), "[]");
+    assertEquals(todoService.findAll().toString(), "[]");
   }
 
   @Test (expected = TodoNotFoundException.class)
   public void throwExceptionWhenIncorrectIdPassed() {
-    todoDAO.save(new Todo("joker"));
-    todoDAO.save(new Todo("joker2"));
-    todoService.getTodoById("invalid");
+    todoService.save(new TodoDTO("joker"));
+    todoService.save(new TodoDTO("joker2"));
+    todoService.findById("invalid");
   }
 
 

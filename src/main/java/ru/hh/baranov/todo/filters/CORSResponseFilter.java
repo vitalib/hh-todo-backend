@@ -1,4 +1,4 @@
-package ru.hh.baranov.todo;
+package ru.hh.baranov.todo.filters;
 
 import java.io.IOException;
 

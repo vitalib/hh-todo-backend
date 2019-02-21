@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.function.Function;
 import org.springframework.context.annotation.Import;
+import ru.hh.baranov.todo.dao.TodoDAOInMemory;
 import ru.hh.baranov.todo.services.TodoService;
 import ru.hh.nab.testbase.NabTestConfig;
 
@@ -18,8 +19,8 @@ public class TodoTestConfig {
   }
 
   @Bean
-  public TodoDAO todoRepository() {
-    return new TodoDAO();
+  public TodoDAOInMemory todoDAOInMemory() {
+    return new TodoDAOInMemory();
   }
 
   @Bean

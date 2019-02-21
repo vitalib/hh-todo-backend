@@ -1,7 +1,7 @@
 package ru.hh.baranov.todo.resources;
 
-import ru.hh.baranov.todo.TodoDAO;
-import ru.hh.baranov.todo.entities.Todo;
+import ru.hh.baranov.todo.dto.TodoDTO;
+import ru.hh.baranov.todo.services.TodoService;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -20,14 +20,14 @@ import javax.ws.rs.core.Response;
 public class TodoResource {
 
     @Inject
-    TodoDAO todoDAO;
+    TodoService todoService;
 
     @GET
     @Path("/todos")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTodos() {
         return Response.ok()
-                .entity(todoDAO.findAll())
+                .entity(todoService.findAll())
                 .build();
     }
 
@@ -35,9 +35,9 @@ public class TodoResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/todos")
-    public Response createTodo(Todo todo) {
+    public Response createTodo(TodoDTO todo) {
         return Response.ok()
-            .entity(todoDAO.save(todo))
+            .entity(todoService.save(todo))
             .build();
 
     }
@@ -47,7 +47,7 @@ public class TodoResource {
     @Path("/todos/{id}")
     public Response getTodoById(@PathParam("id") String id) {
         return Response.ok()
-                .entity(todoDAO.findById(id))
+                .entity(todoService.findById(id))
                 .build();
     }
 
@@ -56,20 +56,17 @@ public class TodoResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
     @Path("/todos/{id}")
-    public Response updateTodo(@PathParam("id") String id, Todo todo) {
-        Todo savedTodo = todoDAO.findById(id);
-        savedTodo.setTitle(todo.getTitle());
-        savedTodo.setCompleted(todo.getCompleted());
-        todoDAO.save(savedTodo);
+    public Response updateTodo(@PathParam("id") String id, TodoDTO todo) {
+        TodoDTO updatedTodoDTO = todoService.update(id, todo);
         return Response.ok()
-                .entity(savedTodo)
+                .entity(updatedTodoDTO)
                 .build();
     }
 
     @DELETE
     @Path("/todos/{id}")
     public Response deleteTodo(@PathParam("id") String id) {
-        todoDAO.deleteById(id);
+        todoService.deleteById(id);
         return Response.ok().build();
     }
 }
