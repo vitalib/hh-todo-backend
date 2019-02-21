@@ -1,4 +1,7 @@
-package ru.hh.baranov.todo;
+package ru.hh.baranov.todo.resources;
+
+import ru.hh.baranov.todo.TodoDAO;
+import ru.hh.baranov.todo.entities.Todo;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;

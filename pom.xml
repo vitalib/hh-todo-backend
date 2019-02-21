@@ -4,10 +4,10 @@
     <parent>
         <groupId>ru.hh.nab</groupId>
         <artifactId>nuts-and-bolts-parent</artifactId>
-        <version>4.14.2-SNAPSHOT</version>
-        <relativePath>..</relativePath>
+        <version>4.14.1</version>
     </parent>
 
+    <groupId>ru.hh.baranov</groupId>
     <artifactId>nab-todo</artifactId>
     <packaging>jar</packaging>
 

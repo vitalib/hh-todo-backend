@@ -3,8 +3,12 @@ package ru.hh.baranov.todo;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
+import ru.hh.baranov.todo.entities.Todo;
+import ru.hh.baranov.todo.exceptions.TodoNotFoundException;
+import ru.hh.baranov.todo.services.TodoService;
 import ru.hh.nab.starter.NabApplication;
 import ru.hh.nab.testbase.NabTestBase;
+import ru.hh.baranov.todo.resources.TodoResource;
 
 import javax.inject.Inject;
 import javax.ws.rs.client.Entity;
@@ -19,6 +23,9 @@ public class TodoResourceTest extends NabTestBase {
 
   @Inject
   TodoDAO todoDAO;
+
+  @Inject
+  TodoService todoService;
 
 
   @Before
@@ -69,6 +76,14 @@ public class TodoResourceTest extends NabTestBase {
             .delete();
     assertEquals(todoDAO.findAll().toString(), "[]");
   }
+
+  @Test (expected = TodoNotFoundException.class)
+  public void throwExceptionWhenIncorrectIdPassed() {
+    todoDAO.save(new Todo("joker"));
+    todoDAO.save(new Todo("joker2"));
+    todoService.getTodoById("invalid");
+  }
+
 
   @Override
   protected NabApplication getApplication() {

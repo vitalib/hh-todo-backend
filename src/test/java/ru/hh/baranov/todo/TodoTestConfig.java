@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.function.Function;
 import org.springframework.context.annotation.Import;
+import ru.hh.baranov.todo.services.TodoService;
 import ru.hh.nab.testbase.NabTestConfig;
 
 @Configuration
@@ -19,5 +20,10 @@ public class TodoTestConfig {
   @Bean
   public TodoDAO todoRepository() {
     return new TodoDAO();
+  }
+
+  @Bean
+  public TodoService todoService() {
+    return new TodoService();
   }
 }

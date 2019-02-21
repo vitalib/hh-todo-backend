@@ -1,5 +1,7 @@
 package ru.hh.baranov.todo;
 
+import ru.hh.baranov.todo.entities.Todo;
+
 import java.util.ArrayList;
 import java.util.List;
 

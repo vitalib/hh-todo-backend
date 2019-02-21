@@ -1,4 +1,4 @@
-package ru.hh.baranov.todo;
+package ru.hh.baranov.todo.entities;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
